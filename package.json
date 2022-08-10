@@ -1,11 +1,13 @@
 {
-  "name": "backend_c",
+  "name": "collection-items-api",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/app.ts"
+    "start:dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "start": "node build/src/app.js",
+    "build": "tsc"
   },
-  "author": "",
+  "author": "Kristina Ignatovich",
   "license": "ISC",
   "keywords": [],
   "description": "",
@@ -18,8 +20,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.182",
     "@types/morgan": "^1.9.3",
-    "morgan": "^1.10.0",
-    "typescript": "^4.7.4"
+    "morgan": "^1.10.0"
   },
   "dependencies": {
     "@typegoose/typegoose": "^9.11.0",
@@ -33,7 +34,9 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.5.1",
     "redis": "^4.2.0",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
-    "zod": "^3.17.10"
+    "zod": "^3.17.10",
+    "typescript": "^4.7.4"
   }
 }
