@@ -1,50 +1,58 @@
-import { omit, get } from 'lodash';
-import { FilterQuery, QueryOptions } from 'mongoose';
-import config from 'config';
-import userModel, { User } from '../model/user.model';
-import { excludedFields } from '../controllers/auth.controller';
-import { signJwt } from '../middleware/jwt';
-import { DocumentType } from '@typegoose/typegoose';
+import config from "config";
+import { omit } from "lodash";
+import { FilterQuery, QueryOptions } from "mongoose";
+import userModel, { User } from "../model/user.model";
+import { excludedFields } from "../controllers/auth.controller";
+import { signJwt } from "../middleware/jwt";
+import { DocumentType } from "@typegoose/typegoose";
 
-// CreateUser service
 export const createUser = async (input: Partial<User>) => {
   const user = await userModel.create(input);
   return omit(user.toJSON(), excludedFields);
 };
-
-// Find User by Id
 export const findUserById = async (id: string) => {
   const user = await userModel.findById(id).lean();
   return omit(user, excludedFields);
 };
 
-// Find All users
+export const findByIdAndUpdate = async (id: string) => {
+  const user = await userModel
+    .findByIdAndUpdate(id, { lastLogin: Date.now() })
+    .lean();
+  return omit(user, excludedFields);
+};
+
+export const updateStatuses = async (ids: [], status: string) => {
+  const users = await userModel.updateMany({ _id: { $in: ids } }, { $set: { status: status } }, { multi: true, upsert: true, new: true });
+  return omit(users, excludedFields);
+};
+
+export const deleteUsers = async (ids: []) => {
+  const users = await userModel.deleteMany({ _id: { $in: ids } }, { multi: true, upsert: true, new: true });
+  return omit(users, excludedFields);
+};
+
 export const findAllUsers = async () => {
   return await userModel.find();
 };
 
-// Find one user by any fields
 export const findUser = async (
   query: FilterQuery<User>,
   options: QueryOptions = {}
 ) => {
-  return await userModel.findOne(query, {}, options).select('+password');
+  return await userModel.findOne(query, {}, options).select("+password");
 };
 
-// Sign Token
 export const signToken = async (user: DocumentType<User>) => {
-  // Sign the access token
   const access_token = signJwt(
     { sub: user._id },
     {
-      expiresIn: `${config.get<number>('accessTokenExpiresIn')}m`,
+      expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
     }
   );
 
-  // Create a Session
-
-
-  // Return access token
   return { access_token };
 };
+
+
 

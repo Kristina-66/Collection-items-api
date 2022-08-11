@@ -10,16 +10,12 @@ import authRouter from './routes/auth.route';
 
 const app = express();
 
-// 1. Body Parser
 app.use(express.json({ limit: '10kb' }));
 
-// 2. Cookie Parser
 app.use(cookieParser());
 
-// 3. Logger
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
-// 4. Cors
 app.use(
   cors({
     origin: config.get<string>('origin'),
@@ -27,11 +23,9 @@ app.use(
   })
 );
 
-// 5. Routes
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 
-// Testing
 app.get('/healthChecker', (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({
     status: 'success',
@@ -39,14 +33,12 @@ app.get('/healthChecker', (req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-// UnKnown Routes
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not found`) as any;
   err.statusCode = 404;
   next(err);
 });
 
-// Global Error Handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
@@ -60,7 +52,6 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
   console.log(`Server started on port: ${port}`);
-  // 👇 call the connectDB function here
   connectDB();
 });
 
