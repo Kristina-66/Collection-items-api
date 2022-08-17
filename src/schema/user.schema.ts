@@ -7,7 +7,7 @@ export const createUserSchema = object({
       'Invalid email'
     ),
     password: string({ required_error: 'Password is required' })
-      .min(1, 'Password must be more than 1 characters'),
+      .min(1),
     passwordConfirm: string({ required_error: 'Please confirm your password' }),
   }).refine((data) => data.password === data.passwordConfirm, {
     path: ['passwordConfirm'],
