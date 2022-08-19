@@ -23,12 +23,19 @@ export const findByIdAndUpdate = async (id: string) => {
 };
 
 export const updateStatuses = async (ids: [], status: string) => {
-  const users = await userModel.updateMany({ _id: { $in: ids } }, { $set: { status: status } }, { multi: true, upsert: true, new: true });
+  const users = await userModel.updateMany(
+    { _id: { $in: ids } },
+    { $set: { status: status } },
+    { multi: true, upsert: true, new: true }
+  );
   return omit(users, excludedFields);
 };
 
 export const deleteUsers = async (ids: []) => {
-  const users = await userModel.deleteMany({ _id: { $in: ids } }, { multi: true, upsert: true, new: true });
+  const users = await userModel.deleteMany(
+    { _id: { $in: ids } },
+    { multi: true, upsert: true, new: true }
+  );
   return omit(users, excludedFields);
 };
 
@@ -53,6 +60,3 @@ export const signToken = async (user: DocumentType<User>) => {
 
   return { access_token };
 };
-
-
-

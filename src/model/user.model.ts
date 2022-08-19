@@ -4,12 +4,14 @@ import {
   modelOptions,
   pre,
   prop,
-} from '@typegoose/typegoose';
-import bcrypt from 'bcryptjs';
+  Ref,
+} from "@typegoose/typegoose";
+import bcrypt from "bcryptjs";
+import { Collection } from "./collection.model";
 
 @index({ email: 1 })
-@pre<User>('save', async function () {
-  if (!this.isModified('password')) return;
+@pre<User>("save", async function () {
+  if (!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 12);
 })
@@ -18,8 +20,10 @@ import bcrypt from 'bcryptjs';
     timestamps: true,
   },
 })
-
 export class User {
+  @prop({ ref: () => Collection })
+  public Collection?: Ref<Collection>[];
+
   @prop()
   name: string;
 
@@ -29,10 +33,10 @@ export class User {
   @prop({ required: true, minlength: 1, select: false })
   password: string;
 
-  @prop({ default: 'user' })
+  @prop({ default: "user" })
   role: string;
 
-  @prop({ default: 'active' })
+  @prop({ default: "active" })
   status: string;
 
   async comparePasswords(hashedPassword: string, candidatePassword: string) {
@@ -42,4 +46,3 @@ export class User {
 
 const userModel = getModelForClass(User);
 export default userModel;
-
