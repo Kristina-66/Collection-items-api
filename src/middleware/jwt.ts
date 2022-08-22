@@ -16,4 +16,3 @@ export const verifyJwt = <T>(token: string): T | null => {
     return null;
   }
 };
-

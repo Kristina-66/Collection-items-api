@@ -14,12 +14,26 @@ export const deleteCollections = async (ids: []) => {
   return omit(collections);
 };
 
-export const updateCollections = async (ids: [], name: string, category: string, description: string) => {
-    const collections = await collectionModel.updateMany(
-      { _id: { $in: ids } },
-      { $set: { name: name, category: category, description: description } },
-      { multi: true, upsert: true, new: true }
-    );
-    return omit(collections);
-  };
-  
+export const updateCollections = async (
+  ids: [],
+  name: string,
+  category: string,
+  description: string
+) => {
+  const collections = await collectionModel.updateMany(
+    { _id: { $in: ids } },
+    { $set: { name: name, category: category, description: description } },
+    { multi: true, upsert: true, new: true }
+  );
+  return omit(collections);
+};
+
+export const findAllCollection = async (user: any) => {
+  const collection = await collectionModel.find({ owner: user });
+  return collection;
+};
+
+export const findByIdCollection = async (id: string) => {
+  const collection = await collectionModel.findById(id);
+  return collection;
+};

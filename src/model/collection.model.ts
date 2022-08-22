@@ -4,7 +4,7 @@ import {
   prop,
   Ref,
 } from "@typegoose/typegoose";
-import { Item } from "./item.model";
+import { User } from "./user.model";
 
 @modelOptions({
   schemaOptions: {
@@ -12,8 +12,6 @@ import { Item } from "./item.model";
   },
 })
 export class Collection {
-  @prop({ ref: () => Item })
-  public Item?: Ref<Item>[];
   @prop()
   name: string;
 
@@ -25,6 +23,9 @@ export class Collection {
 
   @prop({ required: false })
   image: string;
+
+  @prop({ ref: () => User })
+  public owner: Ref<User>;
 }
 
 const collectionModel = getModelForClass(Collection);

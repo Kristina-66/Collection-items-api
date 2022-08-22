@@ -1,5 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
-import { findAllUsers, updateStatuses, deleteUsers } from '../services/user.service';
+import { NextFunction, Request, Response } from "express";
+import {
+  findAllUsers,
+  updateStatuses,
+  deleteUsers,
+} from "../services/user.service";
 
 export const getMeHandler = (
   req: Request,
@@ -9,7 +13,7 @@ export const getMeHandler = (
   try {
     const user = res.locals.user;
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         user,
       },
@@ -27,7 +31,7 @@ export const getAllUsersHandler = async (
   try {
     const users = await findAllUsers();
     res.status(200).json({
-      status: 'success',
+      status: "success",
       result: users.length,
       data: {
         users,
@@ -43,14 +47,12 @@ export const updateStatusHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-
   try {
-    const { id, status } = req.body
+    const { id, status } = req.body;
     const user = await updateStatuses(id, status);
     res.status(200).json({
-      status: 'success',
+      status: "success",
       result: user,
-
     });
   } catch (err: any) {
     next(err);
@@ -65,7 +67,7 @@ export const deleteUsersHandler = async (
   try {
     const users = await deleteUsers(req.body.id);
     res.status(200).json({
-      status: 'success',
+      status: "success",
       result: users,
       data: {
         users,
@@ -75,4 +77,3 @@ export const deleteUsersHandler = async (
     next(err);
   }
 };
-

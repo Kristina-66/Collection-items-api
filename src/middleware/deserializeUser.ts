@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
-import { findUserById } from '../services/user.service';
-import AppError from '../middleware/appError';
-import { verifyJwt } from '../middleware/jwt';
+import { NextFunction, Request, Response } from "express";
+import { findUserById } from "../services/user.service";
+import AppError from "../middleware/appError";
+import { verifyJwt } from "../middleware/jwt";
 
 export const deserializeUser = async (
   req: Request,
@@ -13,15 +13,15 @@ export const deserializeUser = async (
     let access_token;
     if (
       req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
+      req.headers.authorization.startsWith("Bearer")
     ) {
-      access_token = req.headers.authorization.split(' ')[1];
+      access_token = req.headers.authorization.split(" ")[1];
     } else if (req.cookies.accessToken) {
       access_token = req.cookies.accessToken;
     }
 
     if (!access_token) {
-      return next(new AppError('You are not logged in', 401));
+      return next(new AppError("You are not logged in", 401));
     }
 
     // Validate Access Token

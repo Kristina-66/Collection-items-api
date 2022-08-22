@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from "zod";
+import { object, string, TypeOf, any } from "zod";
 
 export const createItemSchema = object({
   body: object({
@@ -6,6 +6,7 @@ export const createItemSchema = object({
     hashtag: string({ required_error: "Hashtag is required" }),
     description: string({ required_error: "Description  is required" }),
     image: string().optional(),
+    itemCollection: any(),
   }),
 });
 

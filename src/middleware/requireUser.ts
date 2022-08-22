@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
-import AppError from '../middleware/appError';
+import { NextFunction, Request, Response } from "express";
+import AppError from "../middleware/appError";
 
 export const requireUser = (
   req: Request,
@@ -13,7 +13,7 @@ export const requireUser = (
     }
 
     if (user.status === "block") {
-      return next(new AppError('You are BLOCKED', 401));
+      return next(new AppError("You are BLOCKED", 401));
     }
 
     next();
@@ -21,4 +21,3 @@ export const requireUser = (
     next(err);
   }
 };
-

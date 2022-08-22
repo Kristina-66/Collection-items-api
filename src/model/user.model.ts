@@ -4,10 +4,8 @@ import {
   modelOptions,
   pre,
   prop,
-  Ref,
 } from "@typegoose/typegoose";
 import bcrypt from "bcryptjs";
-import { Collection } from "./collection.model";
 
 @index({ email: 1 })
 @pre<User>("save", async function () {
@@ -21,9 +19,6 @@ import { Collection } from "./collection.model";
   },
 })
 export class User {
-  @prop({ ref: () => Collection })
-  public Collection?: Ref<Collection>[];
-
   @prop()
   name: string;
 
