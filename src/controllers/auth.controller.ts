@@ -17,7 +17,7 @@ const accessTokenCookieOptions: CookieOptions = {
   ),
   maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "none",
+  sameSite: false,
 };
 
 if (process.env.NODE_ENV === "production")
