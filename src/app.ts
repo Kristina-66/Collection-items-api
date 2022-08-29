@@ -13,6 +13,7 @@ import itemRouter from "./routes/item.route";
 const app = express();
 
 app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
@@ -24,6 +25,7 @@ app.use(
     credentials: true,
   })
 );
+app.use('/uploads', express.static('uploads'))
 
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);

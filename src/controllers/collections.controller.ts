@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateCollectionInput } from "../schema/collections.schema";
 import {
   createCollection,
   deleteCollections,
@@ -7,19 +6,24 @@ import {
   findByIdCollection,
   updateCollections,
 } from "../services/collections.service";
+import config from "config";
+
+const uploadURL = config.get<string>("baseURL");
 
 export const createCollectionHandler = async (
-  req: Request<{}, {}, CreateCollectionInput>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const { name, category, description } = JSON.parse(req.body.data);
   try {
     const user = res.locals.user;
+    const file = `${uploadURL}${req.file?.filename}`;
     const collection = await createCollection({
-      name: req.body.name,
-      category: req.body.category,
-      description: req.body.description,
-      image: req.body.image,
+      name: name,
+      category: category,
+      description: description,
+      image: file,
       owner: user,
     });
 
@@ -40,7 +44,7 @@ export const deleteCollectionsHandler = async (
   next: NextFunction
 ) => {
   try {
-    const collections = await deleteCollections(req.body.id);
+    const collections = await deleteCollections(req.body);
     res.status(200).json({
       status: "success",
       result: collections,
