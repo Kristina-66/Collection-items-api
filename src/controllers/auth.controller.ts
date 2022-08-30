@@ -16,7 +16,7 @@ const accessTokenCookieOptions: CookieOptions = {
     Date.now() + config.get<number>("accessTokenExpiresIn") * 60 * 1000
   ),
   maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
-  httpOnly: false,
+  httpOnly: true,
   sameSite: "none",
 };
 
