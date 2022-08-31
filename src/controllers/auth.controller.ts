@@ -21,7 +21,7 @@ const accessTokenCookieOptions: CookieOptions = {
 };
 
 if (process.env.NODE_ENV === "production")
-  accessTokenCookieOptions.secure = false;
+  accessTokenCookieOptions.secure = true;
 
 export const registerHandler = async (
   req: Request<{}, {}, CreateUserInput>,
