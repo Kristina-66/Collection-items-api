@@ -21,7 +21,7 @@ const accessTokenCookieOptions: CookieOptions = {
 };
 
 if (process.env.NODE_ENV === "production")
-  accessTokenCookieOptions.secure = true;
+  accessTokenCookieOptions.secure = false;
 
 export const registerHandler = async (
   req: Request<{}, {}, CreateUserInput>,
@@ -90,8 +90,8 @@ export const loginHandler = async (
 };
 
 const logout = (res: Response) => {
-  res.cookie("accessToken", "2", { maxAge: 1 });
-  res.cookie("logged_in", "", { maxAge: 1 });
+  res.cookie("accessToken", "2", { ...accessTokenCookieOptions, maxAge: 1 });
+  res.cookie("logged_in", "", { ...accessTokenCookieOptions, maxAge: 1 });
 };
 
 export const logoutHandler = async (
