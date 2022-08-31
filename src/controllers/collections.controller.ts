@@ -81,7 +81,7 @@ export const getCollectionHandler = async (
   next: NextFunction
 ) => {
   try {
-    console.log(req.params.id);
+    console.log(req.params.id, "getCollectionHandler");
     const collection = await findByIdCollection(req.params.id);
     res.status(200).json({
       status: "success",
@@ -120,7 +120,9 @@ export const getAllCollectionsHandler = async (
   next: NextFunction
 ) => {
   try {
+  
     const collections = await findAllCollection();
+  
     res.status(200).json({
       status: "success",
       result: collections.length,

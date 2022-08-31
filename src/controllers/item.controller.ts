@@ -20,7 +20,6 @@ export const createItemHandler = async (
   );
   try {
     const file = `${uploadURL}${req.file?.filename}`;
-    console.log(itemCollection);
     const item = await createItem({
       name: name,
       hashtag: hashtag,

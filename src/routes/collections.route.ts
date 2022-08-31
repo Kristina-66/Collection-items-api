@@ -51,10 +51,11 @@ router.delete("/", deserializeUser, requireUser, deleteCollectionsHandler);
 
 router.patch("/update", deserializeUser, requireUser, updateCollectionsHandler);
 
+router.get("/all",  getAllCollectionsHandler);
+
 router.get("/:id", getCollectionHandler);
 
 router.get("/", deserializeUser, requireUser, getAllCollectionsForUserHandler);
 
-router.get("/all",  getAllCollectionsHandler);
 
 export default router;

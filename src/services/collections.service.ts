@@ -34,7 +34,7 @@ export const findAllCollectionForUser  = async (user: any) => {
 };
 
 export const findAllCollection = async () => {
-  const collection = await collectionModel.find();
+  const collection = await collectionModel.find({}).exec();
   return collection;
 };
 
