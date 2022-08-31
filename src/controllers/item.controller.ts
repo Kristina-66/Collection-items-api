@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateItemInput } from "../schema/item.schema";
 import {
   createItem,
   deleteItems,
@@ -7,19 +6,27 @@ import {
   findByIdItem,
   updateItem,
 } from "../services/item.service";
+import config from "config";
+
+const uploadURL = config.get<string>("baseURL");
 
 export const createItemHandler = async (
-  req: Request<{}, {}, CreateItemInput>,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const { name, hashtag, description, itemCollection } = JSON.parse(
+    req.body.data
+  );
   try {
+    const file = `${uploadURL}${req.file?.filename}`;
+    console.log(itemCollection);
     const item = await createItem({
-      name: req.body.name,
-      hashtag: req.body.hashtag,
-      description: req.body.description,
-      image: req.body.image,
-      itemCollection: req.body.itemCollection,
+      name: name,
+      hashtag: hashtag,
+      description: description,
+      image: file,
+      itemCollection: itemCollection,
     });
 
     res.status(201).json({
