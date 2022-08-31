@@ -2,6 +2,7 @@ import express from "express";
 import {
   createCollectionHandler,
   deleteCollectionsHandler,
+  getAllCollectionsForUserHandler,
   getAllCollectionsHandler,
   getCollectionHandler,
   updateCollectionsHandler,
@@ -52,6 +53,8 @@ router.patch("/update", deserializeUser, requireUser, updateCollectionsHandler);
 
 router.get("/:id", getCollectionHandler);
 
-router.get("/", getAllCollectionsHandler);
+router.get("/", deserializeUser, requireUser, getAllCollectionsForUserHandler);
+
+router.get("/all",  getAllCollectionsHandler);
 
 export default router;

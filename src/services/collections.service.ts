@@ -28,12 +28,13 @@ export const updateCollections = async (
   return omit(collections);
 };
 
-export const findAllCollection = async (user: any) => {
-  if (!user) {
-    const collection = await collectionModel.find();
-    return collection;
-  }
+export const findAllCollectionForUser  = async (user: any) => {
   const collection = await collectionModel.find({ owner: user });
+  return collection;
+};
+
+export const findAllCollection = async () => {
+  const collection = await collectionModel.find();
   return collection;
 };
 

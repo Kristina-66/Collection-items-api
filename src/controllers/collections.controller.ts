@@ -3,6 +3,7 @@ import {
   createCollection,
   deleteCollections,
   findAllCollection,
+  findAllCollectionForUser,
   findByIdCollection,
   updateCollections,
 } from "../services/collections.service";
@@ -93,14 +94,33 @@ export const getCollectionHandler = async (
   }
 };
 
-export const getAllCollectionsHandler = async (
+export const getAllCollectionsForUserHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
     const user = res.locals.user;
-    const collections = await findAllCollection(user);
+    const collections = await findAllCollectionForUser(user);
+    res.status(200).json({
+      status: "success",
+      result: collections.length,
+      data: {
+        collections,
+      },
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
+
+export const getAllCollectionsHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const collections = await findAllCollection();
     res.status(200).json({
       status: "success",
       result: collections.length,
