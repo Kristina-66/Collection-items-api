@@ -25,7 +25,7 @@ app.use(
     credentials: true,
   })
 );
-app.use('/uploads', express.static('uploads'))
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
