@@ -80,12 +80,10 @@ export const getCollectionHandler = async (
   next: NextFunction
 ) => {
   try {
-    // const items =
     console.log(req.params.id);
     const collection = await findByIdCollection(req.params.id);
     res.status(200).json({
       status: "success",
-      // result: items.length,
       data: {
         collection,
       },

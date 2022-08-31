@@ -10,11 +10,9 @@ import {
 } from "../controllers/item.controller";
 import { deserializeUser } from "../middleware/deserializeUser";
 import { requireUser } from "../middleware/requireUser";
-import { validate } from "../middleware/validate";
-import { createItemSchema } from "../schema/item.schema";
 
 const router = express.Router();
-router.use(deserializeUser, requireUser);
+router.use();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,11 +39,17 @@ const fileFilter = (req: any, file: any, cb: any) => {
 };
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-router.post("/", upload.single("image"), createItemHandler);
+router.post(
+  "/",
+  deserializeUser,
+  requireUser,
+  upload.single("image"),
+  createItemHandler
+);
 
-router.delete("/", deleteItemsHandler);
+router.delete("/", deserializeUser, requireUser, deleteItemsHandler);
 
-router.patch("/update", updateItemHandler);
+router.patch("/update", deserializeUser, requireUser, updateItemHandler);
 
 router.get("/:id", getAllItemsInCollectionHandler);
 

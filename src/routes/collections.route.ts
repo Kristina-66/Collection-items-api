@@ -12,7 +12,6 @@ import multer from "multer";
 import path from "path";
 
 const router = express.Router();
-router.use(deserializeUser, requireUser);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,11 +38,17 @@ const fileFilter = (req: any, file: any, cb: any) => {
 };
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-router.post("/", upload.single("image"), createCollectionHandler);
+router.post(
+  "/",
+  deserializeUser,
+  requireUser,
+  upload.single("image"),
+  createCollectionHandler
+);
 
-router.delete("/", deleteCollectionsHandler);
+router.delete("/", deserializeUser, requireUser, deleteCollectionsHandler);
 
-router.patch("/update", updateCollectionsHandler);
+router.patch("/update", deserializeUser, requireUser, updateCollectionsHandler);
 
 router.get("/:id", getCollectionHandler);
 
