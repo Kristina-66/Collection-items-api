@@ -18,23 +18,70 @@ export const updateCollections = async (
   ids: [],
   name: string,
   category: string,
-  description: string
+  description: string,
+  image: string
 ) => {
   const collections = await collectionModel.updateMany(
     { _id: { $in: ids } },
-    { $set: { name: name, category: category, description: description } },
+    { $set: { name: name, category: category, description: description, image: image } },
     { multi: true, upsert: true, new: true }
   );
   return omit(collections);
 };
 
-export const findAllCollectionForUser  = async (user: any) => {
-  const collection = await collectionModel.find({ owner: user });
+export const findAllCollectionForUser = async (user: any) => {
+  const collection = await collectionModel.aggregate([
+    {
+      $match: { owner: { $in: [user._id] } },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "ownerInfo",
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        createdAt: 1,
+        description: 1,
+        category: 1,
+        image: 1,
+        updatedAt: 1,
+        owner: 1,
+        "ownerInfo.name": 1,
+      },
+    },
+  ]);
   return collection;
 };
 
 export const findAllCollection = async () => {
-  const collection = await collectionModel.find({}).exec();
+  const collection = await collectionModel.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "ownerInfo",
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        createdAt: 1,
+        description: 1,
+        category: 1,
+        image: 1,
+        updatedAt: 1,
+        owner: 1,
+        "ownerInfo.name": 1,
+      },
+    },
+  ]);
+
   return collection;
 };
 

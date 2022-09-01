@@ -64,8 +64,8 @@ export const updateCollectionsHandler = async (
   next: NextFunction
 ) => {
   try {
-    const { id, name, category, description } = req.body;
-    const collection = await updateCollections(id, name, category, description);
+    const { id, name, category, description, image } = req.body;
+    const collection = await updateCollections(id, name, category, description, image);
     res.status(200).json({
       status: "success",
       result: collection,
