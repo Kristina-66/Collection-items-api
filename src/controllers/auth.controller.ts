@@ -5,7 +5,7 @@ import {
   createUser,
   findUser,
   findUserById,
-  signToken
+  signToken,
 } from "../services/user.service";
 import AppError from "../utils/appError";
 import redisClient from "../utils/connectRedis";
@@ -19,7 +19,7 @@ const accessTokenCookieOptions: CookieOptions = {
   ),
   maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax"
+  sameSite: "lax",
 };
 
 const refreshTokenCookieOptions: CookieOptions = {
@@ -28,7 +28,7 @@ const refreshTokenCookieOptions: CookieOptions = {
   ),
   maxAge: config.get<number>("refreshTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax"
+  sameSite: "lax",
 };
 
 if (process.env.NODE_ENV === "production")
@@ -43,20 +43,20 @@ export const registerHandler = async (
     const user = await createUser({
       email: req.body.email,
       name: req.body.name,
-      password: req.body.password
+      password: req.body.password,
     });
 
     res.status(201).json({
       status: "success",
       data: {
-        user
-      }
+        user,
+      },
     });
-  } catch (err) {
+  } catch (err: any) {
     if (err.code === 11000) {
       return res.status(409).json({
         status: "fail",
-        message: "Email already exist"
+        message: "Email already exist",
       });
     }
     next(err);
@@ -84,12 +84,12 @@ export const loginHandler = async (
     res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
-      httpOnly: false
+      httpOnly: false,
     });
 
     res.status(200).json({
       status: "success",
-      access_token
+      access_token,
     });
   } catch (err) {
     next(err);
@@ -132,18 +132,18 @@ export const refreshAccessTokenHandler = async (
     }
 
     const access_token = signJwt({ sub: user._id }, "accessTokenPrivateKey", {
-      expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`
+      expiresIn: `${config.get<number>("accessTokenExpiresIn")}m`,
     });
 
     res.cookie("access_token", access_token, accessTokenCookieOptions);
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
-      httpOnly: false
+      httpOnly: false,
     });
 
     res.status(200).json({
       status: "success",
-      access_token
+      access_token,
     });
   } catch (err) {
     next(err);
