@@ -5,6 +5,9 @@ import {
   Ref,
 } from "@typegoose/typegoose";
 import { Collection } from "./collection.model";
+import { Comment } from "./comment.model";
+import { Like } from "./like.model";
+import { User } from "./user.model";
 
 @modelOptions({
   schemaOptions: {
@@ -21,8 +24,20 @@ export class Item {
   @prop()
   description: string;
 
+  @prop({ ref: () => Comment })
+  comments: Comment[];
+
+  @prop({ ref: () => Like })
+  likes: Like[];
+
   @prop({ required: false })
   image: string;
+
+  @prop({ ref: () => User })
+  public owner: Ref<User>;
+
+  @prop()
+  public ownerName: string;
 
   @prop({ ref: () => Collection })
   public itemCollection: Ref<Collection>;

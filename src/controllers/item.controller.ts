@@ -19,6 +19,7 @@ export const createItemHandler = async (
     req.body.data
   );
   try {
+    const user = res.locals.user;
     const file = `${uploadURL}${req.file?.filename}`;
     const item = await createItem({
       name: name,
@@ -26,6 +27,8 @@ export const createItemHandler = async (
       description: description,
       image: file,
       itemCollection: itemCollection,
+      owner: user,
+      ownerName: user.name,
     });
 
     res.status(201).json({

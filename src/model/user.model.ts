@@ -22,7 +22,7 @@ export class User {
   @prop()
   name: string;
 
-  @prop({ unique: true, required: true })
+  @prop({ required: true })
   email: string;
 
   @prop({ required: true, minlength: 1, select: false })

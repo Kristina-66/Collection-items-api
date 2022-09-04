@@ -9,6 +9,7 @@ import userRouter from "./routes/user.route";
 import authRouter from "./routes/auth.route";
 import collectionRouter from "./routes/collections.route";
 import itemRouter from "./routes/item.route";
+import commentRouter from "./routes/comment.route";
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/collection", collectionRouter);
 app.use("/api/item", itemRouter);
+app.use("/api/item/comment", commentRouter);
 
 app.get("/healthChecker", (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({

@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express from "express";
 import multer from "multer";
 import path from "path";
 import {
@@ -6,8 +6,9 @@ import {
   deleteItemsHandler,
   getAllItemsInCollectionHandler,
   getItemHandler,
-  updateItemHandler,
+  updateItemHandler
 } from "../controllers/item.controller";
+import { createItemLikeHandler } from "../controllers/likes.controller";
 import { deserializeUser } from "../middleware/deserializeUser";
 import { requireUser } from "../middleware/requireUser";
 
@@ -23,7 +24,7 @@ const storage = multer.diskStorage({
       null,
       file.originalname + "-" + Date.now() + path.extname(file.originalname)
     );
-  },
+  }
 });
 const fileFilter = (req: any, file: any, cb: any) => {
   if (
@@ -47,6 +48,8 @@ router.post(
 );
 
 router.delete("/", deserializeUser, requireUser, deleteItemsHandler);
+
+router.put("/:id/like", deserializeUser, requireUser, createItemLikeHandler);
 
 router.patch("/update", deserializeUser, requireUser, updateItemHandler);
 
