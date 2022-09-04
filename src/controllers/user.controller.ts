@@ -3,6 +3,7 @@ import {
   findAllUsers,
   updateStatuses,
   deleteUsers,
+  updateRole,
 } from "../services/user.service";
 
 export const getMeHandler = (
@@ -50,6 +51,23 @@ export const updateStatusHandler = async (
   try {
     const { id, status } = req.body;
     const user = await updateStatuses(id, status);
+    res.status(200).json({
+      status: "success",
+      result: user,
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
+
+export const updateRoleHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id, role } = req.body;
+    const user = await updateRole(id, role);
     res.status(200).json({
       status: "success",
       result: user,

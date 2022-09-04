@@ -101,7 +101,6 @@ export const logoutHandler = async (
   next: NextFunction
 ) => {
   try {
-    const user = res.locals.user;
     logout(res);
     res.status(200).json({ status: "success" });
   } catch (err: any) {

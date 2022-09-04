@@ -46,11 +46,22 @@ export const updateItem = async (
   return omit(item);
 };
 
-export const findAllItems = async (collectionId: any) => {
+export const findAllItemsInCollection = async (collectionId: any) => {
   const items = await itemModel
     .find({ itemCollection: collectionId })
+    .aggregate()
     .populate(["likes", { path: "comments", model: "Comment" }]);
 
+  return items;
+};
+
+export const findAllItems = async () => {
+  
+  const items = await itemModel
+    .find()
+    .populate(["likes", { path: "comments", model: "Comment" }]);
+
+  console.log(items);
   return items;
 };
 

@@ -39,8 +39,8 @@ export class Item {
   @prop()
   public ownerName: string;
 
-  @prop({ ref: () => Collection })
-  public itemCollection: Ref<Collection>;
+  @prop()
+  public itemCollection: string;
 }
 
 const itemModel = getModelForClass(Item);

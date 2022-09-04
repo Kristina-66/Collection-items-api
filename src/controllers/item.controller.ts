@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   createItem,
   deleteItems,
+  findAllItemsInCollection,
   findAllItems,
   findByIdItem,
   updateItem,
@@ -85,7 +86,27 @@ export const getAllItemsInCollectionHandler = async (
 ) => {
   try {
     const idCollection = req.params.id;
-    const items = await findAllItems(idCollection);
+    const items = await findAllItemsInCollection(idCollection);
+    res.status(200).json({
+      status: "success",
+      result: items.length,
+      data: {
+        items,
+      },
+    });
+  } catch (err: any) {
+    next(err);
+  }
+};
+
+export const getAllItemsHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    
+    const items = await findAllItems();
     res.status(200).json({
       status: "success",
       result: items.length,

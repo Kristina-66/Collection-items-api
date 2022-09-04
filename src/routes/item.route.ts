@@ -5,6 +5,7 @@ import {
   createItemHandler,
   deleteItemsHandler,
   getAllItemsInCollectionHandler,
+  getAllItemsHandler,
   getItemHandler,
   updateItemHandler
 } from "../controllers/item.controller";
@@ -52,6 +53,8 @@ router.delete("/", deserializeUser, requireUser, deleteItemsHandler);
 router.put("/:id/like", deserializeUser, requireUser, createItemLikeHandler);
 
 router.patch("/update", deserializeUser, requireUser, updateItemHandler);
+
+router.get("/all", getAllItemsHandler);
 
 router.get("/:id", getAllItemsInCollectionHandler);
 

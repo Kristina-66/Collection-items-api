@@ -120,9 +120,7 @@ export const getAllCollectionsHandler = async (
   next: NextFunction
 ) => {
   try {
-  
     const collections = await findAllCollection();
-  
     res.status(200).json({
       status: "success",
       result: collections.length,

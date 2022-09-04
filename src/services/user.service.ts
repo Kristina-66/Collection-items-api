@@ -31,6 +31,16 @@ export const updateStatuses = async (ids: [], status: string) => {
   return omit(users, excludedFields);
 };
 
+export const updateRole = async (ids: [], role: string) => {
+  const users = await userModel.updateMany(
+    { _id: { $in: ids } },
+    { $set: { role: role } },
+    { multi: true, upsert: true, new: true }
+  );
+  return omit(users, excludedFields);
+};
+
+
 export const deleteUsers = async (ids: []) => {
   const users = await userModel.deleteMany(
     { _id: { $in: ids } },
