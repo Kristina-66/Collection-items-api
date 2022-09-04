@@ -19,7 +19,7 @@ const accessTokenCookieOptions: CookieOptions = {
   ),
   maxAge: config.get<number>("accessTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: "none",
 };
 
 const refreshTokenCookieOptions: CookieOptions = {
@@ -28,7 +28,7 @@ const refreshTokenCookieOptions: CookieOptions = {
   ),
   maxAge: config.get<number>("refreshTokenExpiresIn") * 60 * 1000,
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: "none",
 };
 
 if (process.env.NODE_ENV === "production")
