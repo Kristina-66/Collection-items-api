@@ -3,6 +3,7 @@ import {
   loginHandler,
   registerHandler,
   logoutHandler,
+  refreshAccessTokenHandler
 } from "../controllers/auth.controller";
 import { validate } from "../middleware/validate";
 import { createUserSchema, loginUserSchema } from "../schema/user.schema";
@@ -16,5 +17,7 @@ router.post("/register", validate(createUserSchema), registerHandler);
 router.post("/login", validate(loginUserSchema), loginHandler);
 
 router.get("/logout", deserializeUser, requireUser, logoutHandler);
+
+router.get("/refresh", refreshAccessTokenHandler);
 
 export default router;
