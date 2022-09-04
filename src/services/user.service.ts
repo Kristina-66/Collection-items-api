@@ -41,7 +41,6 @@ export const updateRole = async (ids: [], role: string) => {
   return omit(users, excludedFields);
 };
 
-
 export const deleteUsers = async (ids: []) => {
   const users = await userModel.deleteMany(
     { _id: { $in: ids } },

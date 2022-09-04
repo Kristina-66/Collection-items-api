@@ -28,7 +28,7 @@ export class User {
   @prop({ required: true, minlength: 1, select: false })
   password: string;
 
-  @prop({ default: "admin" })
+  @prop({ default: "user" })
   role: string;
 
   @prop({ default: "active" })
