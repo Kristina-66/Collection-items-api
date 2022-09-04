@@ -19,6 +19,7 @@ const accessTokenCookieOptions: CookieOptions = {
   httpOnly: true,
   sameSite: "none",
 };
+//locallhost lax
 
 if (process.env.NODE_ENV === "production")
   accessTokenCookieOptions.secure = true;
