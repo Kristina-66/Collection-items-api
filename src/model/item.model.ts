@@ -4,7 +4,6 @@ import {
   prop,
   Ref,
 } from "@typegoose/typegoose";
-import { Collection } from "./collection.model";
 import { Comment } from "./comment.model";
 import { Like } from "./like.model";
 import { User } from "./user.model";
